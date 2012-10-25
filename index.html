@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+
+	<!-- demo only -->
+	<link href="demo/demo.css" rel="stylesheet">
+	<script src="http://mottie.github.com/Jatt/js/jquery.jatt.min.js"></script> <!-- tooltips -->
+
+	<link href="css/progression.css" rel="stylesheet">
+	<script src="js/jquery.wowProgression.js"></script>
+
+	<script type="text/javascript">
+	$(function(){
+		$('.progression1').wowProgression({
+
+			// ** Guild Info ***
+			// battlenet domain
+			region  : 'us',
+			// locale
+			locale  : 'en_US',
+			// game server name; include spaces and apostrophes
+			server  : "Durotan",
+			// guild name; include spaces and apostrophes
+			guild   : 'The Disreputable Dogs',
+			// list raiders under "all" for all expansion; or under a specific expansion
+			raiders : {
+				'all'   : [ 'Dgenerate', 'Merci', 'Talthax', 'Alometella' ],
+				'mists' : [ 'Holydele' ],
+				'cat'   : [ 'Holymist' ]
+			},
+
+			// ** Appearance **
+			// expansion to show. The order can be changed
+			show    : [ 'mists', 'cat' ],
+			// show heroics?
+			heroics : true,
+			// 75% of raiders showing kill before boss counted as killed
+			ratio   : 0.75,
+			// instance boss count: {n} = number kill count, {t} = total, {p} = percentage
+			count   : '{n}/{t}', // '{p}',
+			// tooltip - boss killed: use {s} for none/killed status text, {n} for number of kills
+			// this is an avg from all raiders
+			status  : "{s}",
+			// use instance abbreviation - "Firelands" becomes "FL"
+			useAbbr : false,
+			// boss status text
+			text    : {
+				zero    : '',  // boss kill count (if zero) - when using {n} in status
+				none    : '',  // boss not killed text
+				killed  : '<img src="demo/killed.png">' // boss killed text
+			},
+			// tooltip class name added to instance block
+			tooltip : "tooltip",
+
+			// ** Callbacks **
+			// initialized callback function
+			// el = $('#progBox') - element that the plugin is initialized on
+			initialized: function(el){
+				// initialize tooltip
+				$.jatt({ direction: 'e' });
+			}
+
+		});
+
+	});
+	</script>
+
+</head>
+<body>
+
+<div id="wrapper">
+	<div class="progression1"></div>
+</div>
+
+</body></html>

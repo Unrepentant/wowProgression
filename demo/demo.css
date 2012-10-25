@@ -1,0 +1,17 @@
+﻿body {background: #000; color: #ddd;}
+#wrapper { width: 220px; margin: 30px auto; }
+
+/* Jatt (tooltip) */
+.tooltip { cursor: pointer; }
+#tooltip {
+	color:#dddddd;
+	background:#222222;
+	border: 1px solid #333333;
+	padding: 5px;
+	display:none;
+	opacity: 0.9;
+	filter: alpha(opacity=90);
+	text-align: left;
+	border-radius: 1em;
+	-moz-border-radius: 1em;
+}

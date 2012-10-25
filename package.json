@@ -1,0 +1,31 @@
+{
+    "name": "wowProgression",
+    "version": "1.0 beta",
+    "title": "wowProgression",
+    "author": {
+        "name": "Rob Garrison",
+        "url": "https://github.com/Mottie"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://www.opensource.org/licenses/mit-license.php"
+        }
+    ],
+    "dependencies": {
+        "jquery": ">=1.5"
+    },
+    "description": "Automatically updating World of Warcraft Progression Widget",
+    "keywords": [
+        "World of Warcraft",
+        "progression"
+    ],
+    "homepage": "https://github.com/Mottie/wowProgression",
+    "demo": "http://mottie.github.com/wowProgression/",
+    "docs": "https://github.com/Mottie/wowProgression/wiki",
+    "files": [
+        "css/progression.css",
+        "js/jquery.wowProgression.js",
+        "js/jquery.wowProgression.min.js"
+    ]
+}

@@ -1,0 +1,88 @@
+﻿/* overall */
+.wowprogression { width: 100%; margin: 0 auto; }
+.wowprogression h3.expansion { margin: 10px 5px; text-align: center; }
+.wowprogression .inst-name { font: 12px verdana, "trebuchet MS", helvetica, sans-serif; min-width: 50%; display: inline-block; }
+
+/********************
+ expansion blocks
+ ********************/
+/* expansion Title */
+.wowprogression h3.expansion-mists {}
+.wowprogression h3.expansion-cat {}
+
+/* expansion instances wrapper */
+.wowprogression div.instances-mists {}
+.wowprogression div.instances-cat {}
+
+/********************
+ instance blocks
+ ********************/
+/* instance listing */
+.wowprogression .instance { width: 100%; border-spacing: 0; }
+.wowprogression .instance td.icon { /* wraps div.icon */
+	width: 36px;
+}
+.wowprogression .instance div.icon {
+	max-width: 35px;
+	width: 35px;
+	height: 35px;
+	margin: 20px 2px 2px 5px;
+	background-image: url(http://us.battle.net/wow/static/images/character/summary/raid-icons.jpg);
+}
+
+/* specific instances */
+/* mists */
+.wowprogression .inst-HoF .icon { background-position: -1780px -5px; }
+.wowprogression .inst-MV .icon { background-position: -1719px -5px; }
+.wowprogression .inst-TES .icon { background-position: -1841px -5px; }
+
+/* cat */
+.wowprogression .inst-DS .icon { background-position: -1658px -5px; }
+.wowprogression .inst-FL .icon { background-position: -1597px -5px; }
+.wowprogression .inst-ToFW .icon { background-position: -1536px -5px; }
+.wowprogression .inst-BoT .icon { background-position: -1414px -5px; }
+.wowprogression .inst-BD .icon { background-position: -1475px -5px; }
+.wowprogression .inst-BH .icon { background-position: -1353px -5px; }
+
+/********************
+ progress bars
+ ********************/
+.wowprogression .bar-bkgd { height: 15px; }
+.wowprogression .bar-color { height: 15px; text-align: right; }
+.wowprogression .bar-text { height: 15px; font: 10px verdana, "trebuchet MS", helvetica, sans-serif; position: relative; top: -4px; padding-right: 5px; }
+
+.wowprogression .bar-normal, .bar-heroic {
+	width: 98%;
+	border: 1px solid #555;
+	background: #222;
+	background: -webkit-gradient(linear, left top, left bottom, from(#222), to(#444));
+	background: -moz-linear-gradient(center top, #222, #444) repeat scroll 0 0 transparent;
+}
+.wowprogression .bar-normal .bar-text { color: #fff; }
+.wowprogression .bar-normal .bar-color {
+	background-color: #00f;
+	background: -webkit-gradient(linear, left top, left bottom, from(#00f), to(#006));
+	background: -moz-linear-gradient(center top, #00f, #006) repeat scroll 0 0 transparent;
+}
+.wowprogression .bar-heroic .bar-text { color: #fff; }
+.wowprogression .bar-heroic .bar-color {
+	background-color: #c00;
+	background: -webkit-gradient(linear, left top, left bottom, from(#c00), to(#600));
+	background: -moz-linear-gradient(center top, #c00, #600) repeat scroll 0 0 transparent;
+}
+
+/********************
+ tooltip styling
+ ********************/
+.tips { width: 250px; }
+/* tooltip title */
+.tips .inst { border-bottom: #555 1px solid; margin: 2px; }
+.tips .inst-title { font-size: 14px; font-weight: bold; }
+.tips .inst-count { float: right; }
+
+/* boss listing */
+.tips .boss { font-size: 13px; position: relative; } /* wrapper */
+.tips .boss-icon { width: 18px; height: 18px; margin: 0 5px 1px 0; vertical-align: middle; }
+.tips .boss-name {}
+.tips .boss-status { position: absolute; right: 5px; }
+.tips .boss-killed { color: red; text-decoration: line-through; }
