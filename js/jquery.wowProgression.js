@@ -1,4 +1,4 @@
-/*! WoW Progression v1.0beta
+/*! WoW Progression v1.1 beta
 	by Rob G (Mottie)
 	https://github.com/Mottie/wowProgression
 	http://www.opensource.org/licenses/mit-license.php
@@ -135,7 +135,9 @@
 					return $.inArray(v, list) === k;
 				});
 				for (i = 0; i < list.length; i++) {
-					raiderz.push( getWoWJSON(list[i]) );
+					if (list[i]) {
+						raiderz.push( getWoWJSON(list[i]) );
+					}
 				}
 				return raiderz;
 			},

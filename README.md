@@ -1,4 +1,4 @@
-### **Features** ([demo](http://mottie.github.com/wowProgression/index.html))
+# **Features** ([demo](http://mottie.github.com/wowProgression/index.html))
 
 * Automatic updates - uses the World of Warcraft API to obtain information.
 * Works with any region and language.
@@ -14,7 +14,7 @@
   * All styling of the progression &amp; tooltips can be modified using css.
   * The plugin uses Blizzard's instance &amp; boss icons, so these are not as easily changed. I'll work on this if there is any demand for it.
 
-### **Notes**
+# **Notes**
 
 * Guild progression is determined from individual raider progression.
 * A boss is determined to be killed when a set number of raiders have killed a boss (see the [ratio](https://github.com/Mottie/wowProgression/wiki/Options#wiki-ratio) option).
@@ -22,29 +22,39 @@
 * The number of boss kills can also be added to the tooltip. But because every raider has a different value, it averages the number of kills. So if a raider that has no boss kills is included, it may drastically affect the average.
 * Any tooltip plugin can be used along with this script.
 
-### **Screenshots**
+# **Screenshots**
 
-#### Showing fractional boss count with killed boss text
+### Showing fractional boss count with killed boss text
 ![fractions](http://mottie.github.com/wowProgression/demo/screenshot1.jpg)
 
-#### Showing percentage complete with killed boss text and number of kills (averaged)
+### Showing percentage complete with killed boss text and number of kills (averaged)
 ![percentage](http://mottie.github.com/wowProgression/demo/screenshot2.jpg)
 
-### **Documentation**
+# **Documentation**
 
 * [Setup](https://github.com/Mottie/wowProgression/wiki/Setup)
 * [Options](https://github.com/Mottie/wowProgression/wiki/Options)
 * [Change Log](https://github.com/Mottie/wowProgression/wiki/Change)
 
-### **Dependencies**
+# **Dependencies**
 
 * jQuery 1.5+ (required)
 * tooltip plugin ([Jatt](https://github.com/Mottie/Jatt) plugin used in the demo)
 
-### **Licensing**
+# **Licensing**
 
 * [MIT License](http://www.opensource.org/licenses/mit-license.php).
 
-### **To Do**
+# **To Do**
 
 * Better error handling for misspelled names
+
+# **Change Log**
+
+### Version 1.1 beta
+
+* Empty strings in the raiders option will now be ignored.
+
+### Vesion 1.0 beta
+
+* Initial release.
