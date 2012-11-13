@@ -101,7 +101,7 @@
 			getWoWJSON = function(name){
 				return jQuery.getJSON(api + escape(name) + "?locale=" + o.locale + "&fields=progression&jsonp=?", function(data){
 					if (data && data.progression) {
-						raiders.push(data.name);
+						raiders.push(data.name.toLocaleLowerCase());
 						raids.push(data.progression.raids);
 					}
 				});
@@ -136,6 +136,7 @@
 				});
 				for (i = 0; i < list.length; i++) {
 					if (list[i]) {
+						list[i] = list[i].toLocaleLowerCase(); // ignore case
 						raiderz.push( getWoWJSON(list[i]) );
 					}
 				}
