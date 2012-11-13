@@ -30,6 +30,9 @@
 ### Showing percentage complete with killed boss text and number of kills (averaged)
 ![percentage](http://mottie.github.com/wowProgression/demo/screenshot2.jpg)
 
+### Showing specific raider kill details inside the tooltip (see the [details](https://github.com/Mottie/wowProgression/wiki/Options#wiki-details) option)
+![details](http://mottie.github.com/wowProgression/demo/screenshot3.jpg)
+
 # **Documentation**
 
 * [Setup](https://github.com/Mottie/wowProgression/wiki/Setup)
@@ -50,6 +53,20 @@
 * Better error handling for misspelled names
 
 # **Change Log**
+
+### Version 1.2 beta
+
+* Script will now ignore the case in raider names.
+* Added `details` option:
+  * If `true`, it adds raider boss kills to the bottom of the tooltip (see the screenshots).
+  * This enables the admin to check if the script is working properly or if a raider needs to be excluded from the list.
+  * These details will always be present within the tooltip, and only hidden when this option is `false`.
+  * The style can be modified using css.
+  * These details were only meant for debugging, so it's not perfect; e.g. the Bastion of Twilight normal mode details will show 5 bosses, instead of the correct 4.
+
+* Added `clickForDetails` option:
+  * When `true` clicking on a progress bar will reveal or hide (toggle) the details within the tooltip.
+  * Set this to `false` to never enable progress bar clicking.
 
 ### Version 1.1 beta
 

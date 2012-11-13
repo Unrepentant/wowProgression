@@ -1,4 +1,4 @@
-/*! WoW Progression v1.1 beta
+/*! WoW Progression v1.2 beta
 	by Rob G (Mottie)
 	https://github.com/Mottie/wowProgression
 	http://www.opensource.org/licenses/mit-license.php
@@ -84,7 +84,14 @@
 
 				// ** Callbacks **
 				// initialized callback function
-				initialized: null
+				initialized: null,
+
+				// ** Debugging **
+				// set to true to show all raider information (for debugging)
+				details : false,
+				// click to show details
+				clickForDetails : true
+
 			}, options),
 
 			// blizzard api: http://blizzard.github.com/api-wow-docs/#features/access-and-regions
@@ -148,8 +155,9 @@
 			},
 
 			processRaids = function(){
-				var i, j, k, l, m, n, p,
+				var i, j, k, l, m, n, p, z,
 				bh, bn, bt, bt2, c, cn, ch,
+				dbt, dbn, dbh,
 				t = '', th, tn, ttn, tth,
 				inst, instances, boss, exp,
 				len;
@@ -170,25 +178,43 @@
 								inst = raids[0][k] || null;
 								if (inst && inst.name === instances[j].name) {
 									// make tooltip
-									ttn = ''; tth = '';
+									ttn = ''; tth = ''; dbt = []; dbn = []; dbh = [];
 									boss = inst.bosses;
 									bn = 0; bh = 0;
-									bt = inst.bosses.length;
+									bt = boss.length;
 									bt2 = bt;
 									// find instance boss kill counts
-									for (l = 0; l < boss.length; l++) {
+									for (l = 0; l < bt; l++) {
 
 										// Check for instance icon, if it doesn't exist, don't add it (removes Ragnaros repeat)
 										if (instances[j].icons[l]) {
+											dbt.push(l+1); // details boss # in header
 											cn = 0; tn = 0;
 											ch = 0; th = 0;
 											// check other raiders
 											for (m = 0; m < len; m++){
 												// check that the raider is listed in the current expansion
-												n = $.inArray( expansion[exp][m], raiders );
+												z = expansion[exp][m];
+												n = $.inArray( (z || '').toLocaleLowerCase(), raiders );
 												if (n >= 0) {
-													if (raids[n][k].bosses[l].normalKills > 0) { cn++; tn += raids[n][k].bosses[l].normalKills; }
-													if (raids[n][k].bosses[l].heroicKills > 0) { ch++; th += raids[n][k].bosses[l].heroicKills; }
+													// add raider names to detailed report
+													if (!dbn[m]) { dbn[m] = [z]; }
+													if (!dbh[m]) { dbh[m] = [z]; }
+													// calculate boss kills
+													if (raids[n][k].bosses[l].normalKills > 0) {
+														dbn[m].push('+');
+														cn++;
+														tn += raids[n][k].bosses[l].normalKills;
+													} else {
+														dbn[m].push('-');
+													}
+													if (raids[n][k].bosses[l].heroicKills > 0) {
+														dbh[m].push('+');
+														ch++;
+														th += raids[n][k].bosses[l].heroicKills;
+													} else {
+														dbh[m].push('-');
+													}
 												}
 											}
 											// update boss kill count
@@ -242,7 +268,16 @@
 										}[m];
 									});
 
-									ttn = "<div class='inst'><div class='inst-title'>Normal <span class='inst-count'>" + bn + "/" + bt2 + " (" + p + ")</span></div></div>" + ttn;
+									ttn = "<div class='inst'><div class='inst-title'>Normal <span class='inst-count'>" +
+										bn + "/" + bt2 + " (" + p + ")</span></div></div>" + ttn;
+
+									// add details
+									ttn += "<div class='details'" + (o.details ? "" : " style='display:none'") +
+										"><hr><table><tr><td>Raider</td><td class='mono'>" + dbt.join(' ') + "</td></tr>";
+									for (m = 0; m < len; m++){
+										ttn += "<tr><td>" + dbn[m].shift() + "</td><td class='mono'>" + dbn[m].join(' ') + "</td></tr>";
+									}
+									ttn += "</table></div>";
 
 									// tables work better when overall width is <200 px... and really, I'm just lazy.
 									t += '<table class="instance inst-' + instances[j].abbr + '"><tr>' +
@@ -270,7 +305,17 @@ t += '<div class="instance inst-' + instances[j].abbr + ' clear"><span class="ic
 												'{t}' : bt
 											}[m];
 										});
-										tth = "<div class='inst'><div class='inst-title'>Heroic <span class='inst-count'>" + bh + "/" + bt + " (" + p + ")</span></div></div>" + tth;
+
+										tth = "<div class='inst'><div class='inst-title'>Heroic <span class='inst-count'>" +
+											bh + "/" + bt + " (" + p + ")</span></div></div>" + tth;
+
+										// add details
+										tth += "<div class='details'" + (o.details ? "" : " style='display:none'") +
+											"><hr><table><tr><td>Raider</td><td class='mono'>" + dbt.join(' ') + "</td></tr>";
+										for (m = 0; m < len; m++){
+											tth += "<tr><td>" + dbh[m].shift() + "</td><td class='mono'>" + dbh[m].join(' ') + "</td></tr>";
+										}
+										tth += "</table></div>";
 
 										t += '<tr><td><div class="bar-bkgd bar-heroic ' + o.tooltip + '" title="<div class=tips>' + tth + '">' +
 											'<div class="bar-color" style="width: ' + p + ';"><span class="bar-text">' + c + '</span></div>' +
@@ -295,7 +340,13 @@ t += '<div class="bar-bkgd bar-heroic ' + o.tooltip + '" title="<div class=tips>
 				} // end expansion loop
 
 				$(el).addClass('wowprogression').html(t);
-				el.initialized = true;
+
+				if (!o.details && o.clickForDetails) {
+					$(el).find('.bar-bkgd').bind('click', function(){
+						$('.tips .details').toggle();
+					});
+				}
+
 				el.initialized = true;
 				if (typeof o.initialized === "function") {
 					o.initialized(el);
