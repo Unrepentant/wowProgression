@@ -121,17 +121,20 @@
 						if (expan === 'all' || $.inArray(expan, o.show) >= 0) {
 							r = o.raiders[expan];
 							for (j = 0; j < r.length; j++) {
-								// overall list of raiders
-								list.push(r[j]);
-								// add raider to specific expansion
-								if (expan === "all") {
-									for (k = 0; k < o.show.length; k++) {
-										if (!expansion[o.show[k]]) { expansion[o.show[k]] = []; }
-										expansion[o.show[k]].push(r[j]);
+								// ignore empty strings
+								if (r[j] !== '') {
+									// overall list of raiders
+									list.push(r[j]);
+									// add raider to specific expansion
+									if (expan === "all") {
+										for (k = 0; k < o.show.length; k++) {
+											if (!expansion[o.show[k]]) { expansion[o.show[k]] = []; }
+											expansion[o.show[k]].push(r[j]);
+										}
+									} else {
+										if (!expansion[expan]) { expansion[expan] = []; }
+										expansion[expan].push(r[j]);
 									}
-								} else {
-									if (!expansion[expan]) { expansion[expan] = []; }
-									expansion[expan].push(r[j]);
 								}
 							}
 						}

@@ -54,6 +54,12 @@
 
 # **Change Log**
 
+### Version 1.0
+
+* Fixed empty raider string issues.
+  * A javascript error will no longer occur.
+  * Ratios will now calculate properly - empty strings not included in the number of raiders.
+
 ### Version 1.2 beta
 
 * Script will now ignore the case in raider names.
