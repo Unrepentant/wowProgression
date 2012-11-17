@@ -1,4 +1,4 @@
-/*! WoW Progression v1.2 beta
+/*! WoW Progression v1.0
 	by Rob G (Mottie)
 	https://github.com/Mottie/wowProgression
 	http://www.opensource.org/licenses/mit-license.php
@@ -270,12 +270,13 @@
 
 									ttn = "<div class='inst'><div class='inst-title'>Normal <span class='inst-count'>" +
 										bn + "/" + bt2 + " (" + p + ")</span></div></div>" + ttn;
-
 									// add details
 									ttn += "<div class='details'" + (o.details ? "" : " style='display:none'") +
 										"><hr><table><tr><td>Raider</td><td class='mono'>" + dbt.join(' ') + "</td></tr>";
 									for (m = 0; m < len; m++){
-										ttn += "<tr><td>" + dbn[m].shift() + "</td><td class='mono'>" + dbn[m].join(' ') + "</td></tr>";
+										if (dbn[m]) {
+											ttn += "<tr><td>" + dbn[m].shift() + "</td><td class='mono'>" + dbn[m].join(' ') + "</td></tr>";
+										}
 									}
 									ttn += "</table></div>";
 
@@ -313,7 +314,9 @@ t += '<div class="instance inst-' + instances[j].abbr + ' clear"><span class="ic
 										tth += "<div class='details'" + (o.details ? "" : " style='display:none'") +
 											"><hr><table><tr><td>Raider</td><td class='mono'>" + dbt.join(' ') + "</td></tr>";
 										for (m = 0; m < len; m++){
-											tth += "<tr><td>" + dbh[m].shift() + "</td><td class='mono'>" + dbh[m].join(' ') + "</td></tr>";
+											if (dbh[m]) {
+												tth += "<tr><td>" + dbh[m].shift() + "</td><td class='mono'>" + dbh[m].join(' ') + "</td></tr>";
+											}
 										}
 										tth += "</table></div>";
 
