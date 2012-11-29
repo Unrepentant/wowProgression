@@ -1,4 +1,4 @@
-/*! WoW Progression v1.0
+/*! WoW Progression v1.0.1
 	by Rob G (Mottie)
 	https://github.com/Mottie/wowProgression
 	http://www.opensource.org/licenses/mit-license.php
@@ -12,7 +12,6 @@
 	});
 */
 /*jshint jquery:true */
-/*global escape:true */
 ;(function($){
 	"use strict";
 	$.fn.wowProgression = function(options){
@@ -95,7 +94,7 @@
 			}, options),
 
 			// blizzard api: http://blizzard.github.com/api-wow-docs/#features/access-and-regions
-			api = "http://" + (o.region === "cn" ? "www.battlenet.com.cn" : o.region + ".battle.net") + "/api/wow/character/" + escape(o.server) + "/",
+			api = "http://" + (o.region === "cn" ? "www.battlenet.com.cn" : o.region + ".battle.net") + "/api/wow/character/" + o.server + "/",
 
 			// boss icon root
 			iconroot = "http://media.blizzard.com/wow/renders/npcs/portrait/creature", // + ".jpg"
@@ -106,7 +105,7 @@
 			t, results,
 
 			getWoWJSON = function(name){
-				return jQuery.getJSON(api + escape(name) + "?locale=" + o.locale + "&fields=progression&jsonp=?", function(data){
+				return jQuery.getJSON(api + name + "?locale=" + o.locale + "&fields=progression&jsonp=?", function(data){
 					if (data && data.progression) {
 						raiders.push(data.name.toLocaleLowerCase());
 						raids.push(data.progression.raids);

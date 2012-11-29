@@ -54,6 +54,10 @@
 
 # **Change Log**
 
+### Version 1.0.1
+
+* Removed escaping of character names as it was improperly encoding special characters.
+
 ### Version 1.0
 
 * Fixed empty raider string issues.
