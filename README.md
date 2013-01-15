@@ -54,6 +54,14 @@
 
 # **Change Log**
 
+### Version 1.1
+
+* Hacked around the issue of handling errors for misspelled names.
+  * Basically, if JSONP requests aren't successful, they don't trigger any events ([ref](http://stackoverflow.com/a/310084/145346)).
+  * If only part of the data has completed loading, this plugin will attempt to build the progression display with what it has already loaded.
+  * If the JSONP requests are all successful, but delayed such that the alloted time (setTimeout set to 2 seconds) has passed, it will build the progression display again with all of the data.
+  * I know this isn't an ideal solution, so if you can figure out a better way, please feel free to fork and push some changes!
+
 ### Version 1.0.1
 
 * Removed escaping of character names as it was improperly encoding special characters.

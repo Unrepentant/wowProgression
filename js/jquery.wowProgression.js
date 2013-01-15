@@ -1,4 +1,4 @@
-/*! WoW Progression v1.0.1
+/*! WoW Progression v1.1
 	by Rob G (Mottie)
 	https://github.com/Mottie/wowProgression
 	http://www.opensource.org/licenses/mit-license.php
@@ -103,6 +103,7 @@
 			expansion = {},
 			raiders = [],
 			t, results,
+			hasInitialized = false,
 
 			getWoWJSON = function(name){
 				return jQuery.getJSON(api + name + "?locale=" + o.locale + "&fields=progression&jsonp=?", function(data){
@@ -157,6 +158,8 @@
 			},
 
 			processRaids = function(){
+				// Don't let this run twice, if it initialized successfully!
+				if (hasInitialized) { return; }
 				var i, j, k, l, m, n, p, z,
 				bh, bn, bt, bt2, c, cn, ch,
 				dbt, dbn, dbh,
@@ -347,23 +350,33 @@ t += '<div class="bar-bkgd bar-heroic ' + o.tooltip + '" title="<div class=tips>
 				$(el).addClass('wowprogression').html(t);
 
 				if (!o.details && o.clickForDetails) {
-					$(el).find('.bar-bkgd').bind('click', function(){
+					$(el).find('.bar-bkgd').unbind('click').bind('click', function(){
 						$('.tips .details').toggle();
 					});
 				}
 
-				el.initialized = true;
-				if (typeof o.initialized === "function") {
+				if (typeof o.initialized === "function" && !el.initialized) {
 					o.initialized(el);
 				}
+				el.initialized = true;
 			}; // end processRaids
 
 			t = getRaiders();
 			if (t.length) {
 				results = $.when.apply($, t);
 				results.done(function(){
+					// successful initialization! YAY!
 					processRaids();
+					hasInitialized = true;
 				});
+				setTimeout(function(){
+					// results.done is never called if there is a 404 error (misspelled or incorrect character name)
+					// so lets just try to go with what we got. This would be an "unsuccessful" initialization, so
+					// don't set the hasInitialized flag, in case results.done takes longer than 2 seconds.
+					if (raiders.length > 0) {
+						processRaids();
+					}
+				}, 2000);
 			}
 
 		});
