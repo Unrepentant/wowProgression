@@ -54,6 +54,10 @@
 
 # **Change Log**
 
+### Version 1.2
+
+* Added Throne of Thunder instance (patch 5.2)
+
 ### Version 1.1
 
 * Hacked around the issue of handling errors for misspelled names.

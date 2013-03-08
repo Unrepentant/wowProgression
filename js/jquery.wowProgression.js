@@ -1,4 +1,4 @@
-/*! WoW Progression v1.1
+/*! WoW Progression v1.2
 	by Rob G (Mottie)
 	https://github.com/Mottie/wowProgression
 	http://www.opensource.org/licenses/mit-license.php
@@ -66,6 +66,7 @@
 				// list of all raids in each expansion, with abbreviations & boss icons
 				allraids: {
 					"mists": [
+					{ abbr: "ToT",  hasHeroic: true, name: "Throne of Thunder", icons: [69465,68476,69078,67977,68066,68177,67827,69017,69427,68078,68904,68397,69473], heroicBoss: true },
 					{ abbr: "ToES", hasHeroic: true, name: "Terrace of Endless Spring", icons: [60583, 62442, 62983, 60999] },
 					{ abbr: "HoF",  hasHeroic: true, name: "Heart of Fear", icons: [62980, 62543, 62164, 62397, 62511, 62837] },
 					{ abbr: "MV",   hasHeroic: true, name: "Mogu'shan Vaults", icons: [60051,60009,60143,60701,60410,60396] }
