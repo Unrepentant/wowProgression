@@ -54,6 +54,10 @@
 
 # **Change Log**
 
+### Version 1.2.1
+
+* Updated css to include the new raid icon
+
 ### Version 1.2
 
 * Added Throne of Thunder instance (patch 5.2)

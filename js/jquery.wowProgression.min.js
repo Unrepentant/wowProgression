@@ -1,4 +1,4 @@
-/*! WoW Progression v1.2
+/*! WoW Progression v1.2.1
 	by Rob G (Mottie)
 	https://github.com/Mottie/wowProgression
 	http://www.opensource.org/licenses/mit-license.php

@@ -32,9 +32,10 @@
 
 /* specific instances */
 /* mists */
+.wowprogression .inst-ToT .icon { background-position: -1902px -5px; }
 .wowprogression .inst-HoF .icon { background-position: -1780px -5px; }
 .wowprogression .inst-MV .icon { background-position: -1719px -5px; }
-.wowprogression .inst-TES .icon { background-position: -1841px -5px; }
+.wowprogression .inst-ToES .icon { background-position: -1841px -5px; }
 
 /* cat */
 .wowprogression .inst-DS .icon { background-position: -1658px -5px; }
