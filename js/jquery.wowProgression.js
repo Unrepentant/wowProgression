@@ -1,4 +1,4 @@
-/*! WoW Progression v1.2.1
+/*! WoW Progression v1.3.0
 	by Rob G (Mottie)
 	https://github.com/Mottie/wowProgression
 	http://www.opensource.org/licenses/mit-license.php
@@ -12,6 +12,7 @@
 	});
 */
 /*jshint jquery:true */
+/*global console:false */
 ;(function($){
 	"use strict";
 	$.fn.wowProgression = function(options){
@@ -66,19 +67,19 @@
 				// list of all raids in each expansion, with abbreviations & boss icons
 				allraids: {
 					"mists": [
-					{ abbr: "ToT",  hasHeroic: true, name: "Throne of Thunder", icons: [69465,68476,69078,67977,68066,68177,67827,69017,69427,68078,68904,68397,69473], heroicBoss: true },
-					{ abbr: "ToES", hasHeroic: true, name: "Terrace of Endless Spring", icons: [60583, 62442, 62983, 60999] },
-					{ abbr: "HoF",  hasHeroic: true, name: "Heart of Fear", icons: [62980, 62543, 62164, 62397, 62511, 62837] },
-					{ abbr: "MV",   hasHeroic: true, name: "Mogu'shan Vaults", icons: [60051,60009,60143,60701,60410,60396] }
+					{ abbr: "ToT",  hasHeroic: true, id: 6622, icons: [69465,68476,69078,67977,68066,68177,67827,69017,69427,68078,68904,68397,69473], heroicBoss: true },
+					{ abbr: "ToES", hasHeroic: true, id: 6067, icons: [60583, 62442, 62983, 60999] },
+					{ abbr: "HoF",  hasHeroic: true, id: 6297, icons: [62980, 62543, 62164, 62397, 62511, 62837] },
+					{ abbr: "MV",   hasHeroic: true, id: 6125, icons: [60051,60009,60143,60701,60410,60396] }
 					],
 					"cat": [
-					{ abbr: "DS",   hasHeroic: true, name: "Dragon Soul", icons: [55265,55308,55312,55689,55294,56427,53879,57962] },
-					{ abbr: "FL",   hasHeroic: true, name: "Firelands", icons: [52498,52558,53691,52530,53494,52571,52409] },
-					{ abbr: "ToFW", hasHeroic: true, name: "Throne of the Four Winds", icons: [45871,46753] },
+					{ abbr: "DS",   hasHeroic: true, id: 5892, icons: [55265,55308,55312,55689,55294,56427,53879,57962] },
+					{ abbr: "FL",   hasHeroic: true, id: 5723, icons: [52498,52558,53691,52530,53494,52571,52409] },
+					{ abbr: "ToFW", hasHeroic: true, id: 5638, icons: [45871,46753] },
 					// heroicBoss was added as a hack to make the last boss in the instance only show up in heroic mode; in this case it's Sinestra
-					{ abbr: "BoT",  hasHeroic: true, name: "The Bastion of Twilight", icons: [44600,45993,43687,43324,45213], heroicBoss: true },
-					{ abbr: "BD",   hasHeroic: true, name: "Blackwing Descent", icons: [42179,41570,41442,43296,41378,41376] },
-					{ abbr: "BH",   hasHeroic: false, name: "Baradin Hold", icons: [47120,52363,55869] }
+					{ abbr: "BoT",  hasHeroic: true, id: 5334, icons: [44600,45993,43687,43324,45213], heroicBoss: true },
+					{ abbr: "BD",   hasHeroic: true, id: 5094, icons: [42179,41570,41442,43296,41378,41376] },
+					{ abbr: "BH",   hasHeroic: false,id: 5600, icons: [47120,52363,55869] }
 					]
 				},
 
@@ -90,7 +91,9 @@
 				// set to true to show all raider information (for debugging)
 				details : false,
 				// click to show details
-				clickForDetails : true
+				clickForDetails : true,
+				// output to console
+				debug : false
 
 			}, options),
 
@@ -106,11 +109,20 @@
 			t, results,
 			hasInitialized = false,
 
+			output = {},
+			log = function(txt){
+				if (console && console.log) {
+					console.log(txt);
+				}
+			},
+
 			getWoWJSON = function(name){
 				return jQuery.getJSON(api + name + "?locale=" + o.locale + "&fields=progression&jsonp=?", function(data){
 					if (data && data.progression) {
-						raiders.push(data.name.toLocaleLowerCase());
+						var name = data.name.toLocaleLowerCase();
+						raiders.push(name);
 						raids.push(data.progression.raids);
+						if (o.debug) { log([ name, 'URL: ' + api + name + "?locale=" + o.locale + "&fields=progression", data ]); }
 					}
 				});
 			},
@@ -138,6 +150,7 @@
 									}
 								}
 							}
+							if (o.debug) { log('Expansion (' + expan + ') raiders: ' + r ); }
 						}
 					}
 				}
@@ -171,7 +184,7 @@
 				for (i = 0; i < o.show.length; i++) {
 					/*jshint loopfunc: true */
 					exp = o.show[i];
-					//
+					if (o.debug) { output[exp] = {}; }
 					instances = o.allraids[exp];
 					// number of raiders for the current expansion
 					len = expansion[exp].length;
@@ -182,7 +195,9 @@
 						if (raids[0]) {
 							for (k = 0; k < raids[0].length; k++) {
 								inst = raids[0][k] || null;
-								if (inst && inst.name === instances[j].name) {
+								if (inst && inst.id === instances[j].id) {
+									instances[j].name = inst.name;
+									if (o.debug) { output[exp][inst.name] = {}; }
 									// make tooltip
 									ttn = ''; tth = ''; dbt = []; dbn = []; dbh = [];
 									boss = inst.bosses;
@@ -236,12 +251,15 @@
 
 											if (instances[j].heroicBoss && l === inst.bosses.length - 1) {
 												bt2 = bt - 1;
-												// skip Sinestra in BoT
+												// skip Sinestra in BoT & Ra-den in ToT
 											} else {
 												ttn += "<div class='boss " + (cn/len >= o.ratio ? 'boss-killed' : '') + "'>" +
 												"<img class='boss-icon' src='" + iconroot + instances[j].icons[l] + ".jpg'>" +
 												"<span class='boss-name'>" + fixQuotes(boss[l].name) + "</span>" +
 												"<span class='boss-status'>" + c + "</span></div>";
+												if (o.debug) {
+													output[exp][inst.name][boss[l].name] = 'ratio: ' + (cn/len) + ', normal: ' + (cn/len >= o.ratio ? '+' : '-') + ', ';
+												}
 											}
 
 											// include heroics?
@@ -256,6 +274,12 @@
 												"<img class='boss-icon' src='" + iconroot + instances[j].icons[l] + ".jpg'>" +
 												"<span class='boss-name'>" + fixQuotes(boss[l].name) + "</span>" +
 												"<span class='boss-status'>" + c + "</span></div>";
+
+												if (o.debug) {
+													// some bosses are heroic only, so make sure the name is defined
+													output[exp][inst.name][boss[l].name] = (output[exp][inst.name][boss[l].name] || '') +
+														'heroic: ' + (ch/len >= o.ratio ? '+' : '-');
+												}
 											}
 										} else {
 											// boss doesn't exist, remove one from total
@@ -294,14 +318,6 @@
 									'<div class="bar-color" style="width: ' + p + ';"><span class="bar-text">' + c + '</span></div>' +
 									'</td></tr>';
 
-/*
-t += '<div class="instance inst-' + instances[j].abbr + ' clear"><span class="icon"></span>' +
-	'<span class="inst-name">' + instances[j][o.useAbbr ? 'abbr' : 'name' ] + '</span>' +
-	'<div class="bar-bkgd bar-normal ' + o.tooltip + '" title="<div class=tips>' + ttn + '</div>">' +
-	'<div class="bar-color" style="width: ' + p + ';"><span class="bar-text">' + c + '</span></div>' +
-	'</div>';
-*/
-
 									// include heroics?
 									if (o.heroics && instances[j].hasHeroic) {
 										p = Math.round(bh/bt * 100) + '%'; // % killed
@@ -330,12 +346,6 @@ t += '<div class="instance inst-' + instances[j].abbr + ' clear"><span class="ic
 											'<div class="bar-color" style="width: ' + p + ';"><span class="bar-text">' + c + '</span></div>' +
 											'</div></td></tr>';
 
-/*
-t += '<div class="bar-bkgd bar-heroic ' + o.tooltip + '" title="<div class=tips>' + tth + '">' +
-	'<div class="bar-color" style="width: ' + p + ';"><span class="bar-text">' + c + '</span></div>' +
-	'</div>';
-*/
-
 									}
 
 									t += '</div>';
@@ -348,6 +358,7 @@ t += '<div class="bar-bkgd bar-heroic ' + o.tooltip + '" title="<div class=tips>
 
 				} // end expansion loop
 
+				if (o.debug) { log(output); }
 				$(el).addClass('wowprogression').html(t);
 
 				if (!o.details && o.clickForDetails) {
@@ -366,6 +377,7 @@ t += '<div class="bar-bkgd bar-heroic ' + o.tooltip + '" title="<div class=tips>
 			if (t.length) {
 				results = $.when.apply($, t);
 				results.done(function(){
+					if (o.debug) { log('Loading complete: processing...'); }
 					// successful initialization! YAY!
 					processRaids();
 					hasInitialized = true;
@@ -375,6 +387,7 @@ t += '<div class="bar-bkgd bar-heroic ' + o.tooltip + '" title="<div class=tips>
 					// so lets just try to go with what we got. This would be an "unsuccessful" initialization, so
 					// don't set the hasInitialized flag, in case results.done takes longer than 2 seconds.
 					if (raiders.length > 0) {
+						if (o.debug && !hasInitialized) { log("One or more raiders' JSON feeds failed to load..."); }
 						processRaids();
 					}
 				}, 2000);

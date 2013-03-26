@@ -54,6 +54,20 @@
 
 # **Change Log**
 
+### Version 1.3.0
+
+* Fixed an issue with the plugin not working with localized languages properly.
+  * The plugin now uses the instance ID instead of the instance name, so now all intances names are localized properly.
+  * To change the language of the expansion name, modify the `allexps` option.
+
+    ```javascript
+    allexps : {
+      "mists" : "mistery",   // get it? HA!
+      "cat"   : "cataclyzum" // I spell guud
+    }
+    ```
+* Added a `debug` option which outputs to the console for troubleshooting.
+
 ### Version 1.2.1
 
 * Updated css to include the new raid icon
