@@ -1,4 +1,4 @@
-# **Features** ([demo](http://mottie.github.com/wowProgression/index.html))
+# **Features** ([demo](http://Unrepentant.github.com/wowProgression/index.html))
 
 * Automatic updates - uses the World of Warcraft API to obtain information.
 * Works with any region and language.
@@ -17,7 +17,7 @@
 # **Notes**
 
 * Guild progression is determined from individual raider progression.
-* A boss is determined to be killed when a set number of raiders have killed a boss (see the [ratio](https://github.com/Mottie/wowProgression/wiki/Options#wiki-ratio) option).
+* A boss is determined to be killed when a set number of raiders have killed a boss (see the [ratio](https://github.com/Unrepentant/wowProgression/wiki/Options#wiki-ratio) option).
 * Guild run achievements were not used because they didn't seem to return consistent results. Also only the last heroic boss is tracked.
 * The number of boss kills can also be added to the tooltip. But because every raider has a different value, it averages the number of kills. So if a raider that has no boss kills is included, it may drastically affect the average.
 * Any tooltip plugin can be used along with this script.
@@ -25,19 +25,19 @@
 # **Screenshots**
 
 ### Showing fractional boss count with killed boss text
-![fractions](http://mottie.github.com/wowProgression/demo/screenshot1.jpg)
+![fractions](http://Unrepentant.github.com/wowProgression/demo/screenshot1.jpg)
 
 ### Showing percentage complete with killed boss text and number of kills (averaged)
-![percentage](http://mottie.github.com/wowProgression/demo/screenshot2.jpg)
+![percentage](http://Unrepentant.github.com/wowProgression/demo/screenshot2.jpg)
 
-### Showing specific raider kill details inside the tooltip (see the [details](https://github.com/Mottie/wowProgression/wiki/Options#wiki-details) option)
-![details](http://mottie.github.com/wowProgression/demo/screenshot3.jpg)
+### Showing specific raider kill details inside the tooltip (see the [details](https://github.com/Unrepentant/wowProgression/wiki/Options#wiki-details) option)
+![details](http://Unrepentant.github.com/wowProgression/demo/screenshot3.jpg)
 
 # **Documentation**
 
-* [Setup](https://github.com/Mottie/wowProgression/wiki/Setup)
-* [Options](https://github.com/Mottie/wowProgression/wiki/Options)
-* [Change Log](https://github.com/Mottie/wowProgression/wiki/Change)
+* [Setup](https://github.com/Unrepentant/wowProgression/wiki/Setup)
+* [Options](https://github.com/Unrepentant/wowProgression/wiki/Options)
+* [Change Log](https://github.com/Unrepentant/wowProgression/wiki/Change)
 
 # **Dependencies**
 
@@ -54,18 +54,24 @@
 
 # **Change Log**
 
+### Version 1.4.0
+
+* Added Siege of Orgrimmar instance.
+* Fixed the normal instance total number of bosses within the details display (click on any progress bar to see it).
+
 ### Version 1.3.0
 
 * Fixed an issue with the plugin not working with localized languages properly.
   * The plugin now uses the instance ID instead of the instance name, so now all intances names are localized properly.
   * To change the language of the expansion name, modify the `allexps` option.
 
-    ```javascript
-    allexps : {
-      "mists" : "mistery",   // get it? HA!
-      "cat"   : "cataclyzum" // I spell guud
-    }
-    ```
+      ```javascript
+      allexps : {
+        "mists" : "mistery",   // get it? HA!
+        "cat"   : "cataclyzum" // I spell guud
+      }
+      ```
+
 * Added a `debug` option which outputs to the console for troubleshooting.
 
 ### Version 1.2.1

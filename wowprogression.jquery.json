@@ -1,7 +1,7 @@
 {
 	"name": "wowprogression",
 	"title": "World of Warcraft Progression",
-	"version": "1.3.0",
+	"version": "1.4.0",
 	"description": "Automatically updating World of Warcraft Progression Widget",
 	"author": {
 		"name": "Rob Garrison",
@@ -12,10 +12,10 @@
 		"type": "MIT",
 		"url": "http://www.opensource.org/licenses/mit-license.php"
 	}],
-	"homepage": "https://github.com/Mottie/wowProgression",
-	"bugs": "https://github.com/Mottie/wowProgression/issues",
-	"docs": "https://github.com/Mottie/wowProgression/wiki",
-	"demo": "http://mottie.github.com/wowProgression/",
+	"homepage": "https://github.com/Unrepentant/wowProgression",
+	"bugs": "https://github.com/Unrepentant/wowProgression/issues",
+	"docs": "https://github.com/Unrepentant/wowProgression/wiki",
+	"demo": "http://Unrepentant.github.com/wowProgression/",
 	"dependencies": {
 		"jquery": ">=1.5"
 	},

@@ -1,4 +1,4 @@
-/*! WoW Progression v1.3.0
+/*! WoW Progression v1.4.0
 	by Rob G (Mottie)
 	https://github.com/Mottie/wowProgression
 	http://www.opensource.org/licenses/mit-license.php
@@ -64,12 +64,22 @@
 					"mists"   : "Mists of Pandaria",
 					"cat"     : "Catacylsm"
 				},
-				// list of all raids in each expansion, with abbreviations & boss icons
+				/***
+				list of all raids in each expansion, with abbreviations & boss icons
+				get the id and icon numbers from wowhead, e.g.
+				  Siege of Orgrimmar: http://www.wowhead.com/zone=6738 <- 6738 is the instance ID
+				  Immerseus: http://www.wowhead.com/npc=71543 <- 71543 is the boss id/icon number (first boss)
+				if the raid doesn't show up, it might not be available from the battlenet feed:
+				  http://us.battle.net/api/wow/character/{server}/{character}?locale=en_US&fields=progression
+				load the above feed replacing the {server}/{character} with appropriate names,
+				then CTRL-F to find the instance name & see if it exists
+				***/
 				allraids: {
 					"mists": [
+					{ abbr: "SoO",  hasHeroic: true, id: 6738, icons: [71543,71475,71965,71734,72249,72616,71859,71515,71454,71889,71529,71504,71152,71865] },
 					{ abbr: "ToT",  hasHeroic: true, id: 6622, icons: [69465,68476,69078,67977,68066,68177,67827,69017,69427,68078,68904,68397,69473], heroicBoss: true },
-					{ abbr: "ToES", hasHeroic: true, id: 6067, icons: [60583, 62442, 62983, 60999] },
-					{ abbr: "HoF",  hasHeroic: true, id: 6297, icons: [62980, 62543, 62164, 62397, 62511, 62837] },
+					{ abbr: "ToES", hasHeroic: true, id: 6067, icons: [60583,62442,62983,60999] },
+					{ abbr: "HoF",  hasHeroic: true, id: 6297, icons: [62980,62543,62164,62397,62511,62837] },
 					{ abbr: "MV",   hasHeroic: true, id: 6125, icons: [60051,60009,60143,60701,60410,60396] }
 					],
 					"cat": [
@@ -77,6 +87,7 @@
 					{ abbr: "FL",   hasHeroic: true, id: 5723, icons: [52498,52558,53691,52530,53494,52571,52409] },
 					{ abbr: "ToFW", hasHeroic: true, id: 5638, icons: [45871,46753] },
 					// heroicBoss was added as a hack to make the last boss in the instance only show up in heroic mode; in this case it's Sinestra
+					// otherwise we'd have two separate "icons" arrays, one for normal and the other for heroic (lots of duplication)
 					{ abbr: "BoT",  hasHeroic: true, id: 5334, icons: [44600,45993,43687,43324,45213], heroicBoss: true },
 					{ abbr: "BD",   hasHeroic: true, id: 5094, icons: [42179,41570,41442,43296,41378,41376] },
 					{ abbr: "BH",   hasHeroic: false,id: 5600, icons: [47120,52363,55869] }
@@ -176,7 +187,7 @@
 				if (hasInitialized) { return; }
 				var i, j, k, l, m, n, p, z,
 				bh, bn, bt, bt2, c, cn, ch,
-				dbt, dbn, dbh,
+				dbnt, dbht, dbn, dbh, hb,
 				t = '', th, tn, ttn, tth,
 				inst, instances, boss, exp,
 				len;
@@ -199,19 +210,22 @@
 									instances[j].name = inst.name;
 									if (o.debug) { output[exp][inst.name] = {}; }
 									// make tooltip
-									ttn = ''; tth = ''; dbt = []; dbn = []; dbh = [];
+									ttn = ''; tth = ''; dbnt = []; dbht = []; dbn = []; dbh = [];
 									boss = inst.bosses;
 									bn = 0; bh = 0;
-									bt = boss.length;
-									bt2 = bt;
+									bt = boss.length; // bt = boss total in normal
+									bt2 = bt; // bt2 = boss total in heroic (-1 if heroicBoss is true)
 									// find instance boss kill counts
 									for (l = 0; l < bt; l++) {
 
 										// Check for instance icon, if it doesn't exist, don't add it (removes Ragnaros repeat)
 										if (instances[j].icons[l]) {
-											dbt.push(l+1); // details boss # in header
-											cn = 0; tn = 0;
-											ch = 0; th = 0;
+											// has heroic boss
+											hb = !instances[j].heroicBoss || ( instances[j].heroicBoss && l < inst.bosses.length - 1 );
+											if (hb) { dbnt.push(l+1); } // details (normal) boss # in header
+											dbht.push(l+1); // (heroic)
+											cn = 0; tn = 0; // normal instance boss count/total
+											ch = 0; th = 0; // heroic instance boss count/total
 											// check other raiders
 											for (m = 0; m < len; m++){
 												// check that the raider is listed in the current expansion
@@ -221,13 +235,16 @@
 													// add raider names to detailed report
 													if (!dbn[m]) { dbn[m] = [z]; }
 													if (!dbh[m]) { dbh[m] = [z]; }
-													// calculate boss kills
-													if (raids[n][k].bosses[l].normalKills > 0) {
-														dbn[m].push('+');
-														cn++;
-														tn += raids[n][k].bosses[l].normalKills;
-													} else {
-														dbn[m].push('-');
+													// don't count the heroic only boss (only the last boss is skipped)
+													if (hb) {
+														// calculate boss kills
+														if (raids[n][k].bosses[l].normalKills > 0) {
+															dbn[m].push('+');
+															cn++;
+															tn += raids[n][k].bosses[l].normalKills;
+														} else {
+															dbn[m].push('-');
+														}
 													}
 													if (raids[n][k].bosses[l].heroicKills > 0) {
 														dbh[m].push('+');
@@ -302,7 +319,7 @@
 										bn + "/" + bt2 + " (" + p + ")</span></div></div>" + ttn;
 									// add details
 									ttn += "<div class='details'" + (o.details ? "" : " style='display:none'") +
-										"><hr><table><tr><td>Raider</td><td class='mono'>" + dbt.join(' ') + "</td></tr>";
+										"><hr><table><tr><td>Raider</td><td class='mono'>" + dbnt.join(' ') + "</td></tr>";
 									for (m = 0; m < len; m++){
 										if (dbn[m]) {
 											ttn += "<tr><td>" + dbn[m].shift() + "</td><td class='mono'>" + dbn[m].join(' ') + "</td></tr>";
@@ -334,7 +351,7 @@
 
 										// add details
 										tth += "<div class='details'" + (o.details ? "" : " style='display:none'") +
-											"><hr><table><tr><td>Raider</td><td class='mono'>" + dbt.join(' ') + "</td></tr>";
+											"><hr><table><tr><td>Raider</td><td class='mono'>" + dbht.join(' ') + "</td></tr>";
 										for (m = 0; m < len; m++){
 											if (dbh[m]) {
 												tth += "<tr><td>" + dbh[m].shift() + "</td><td class='mono'>" + dbh[m].join(' ') + "</td></tr>";
