@@ -1,13 +1,17 @@
 {
 	"name": "wowprogression",
 	"title": "World of Warcraft Progression",
-	"version": "1.4.0",
+	"version": "1.5.0",
 	"description": "Automatically updating World of Warcraft Progression Widget",
 	"author": {
 		"name": "Rob Garrison",
 		"url": "https://github.com/Mottie",
 		"email": "wowmotty@gmail.com"
 	},
+	"maintainers": [{
+		"name": "Chris Magnuson",
+		"url": "https://github.com/holyzala"
+	}],
 	"licenses": [{
 		"type": "MIT",
 		"url": "http://www.opensource.org/licenses/mit-license.php"

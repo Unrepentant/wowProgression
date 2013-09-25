@@ -53,12 +53,18 @@
 .wowprogression .bar-color { height: 15px; text-align: right; }
 .wowprogression .bar-text { height: 15px; font: 10px verdana, "trebuchet MS", helvetica, sans-serif; position: relative; top: -4px; padding-right: 5px; }
 
-.wowprogression .bar-normal, .bar-heroic {
+.wowprogression .bar-bkgd {
 	width: 98%;
 	border: 1px solid #555;
 	background: #222;
 	background: -webkit-gradient(linear, left top, left bottom, from(#222), to(#444));
 	background: -moz-linear-gradient(center top, #222, #444) repeat scroll 0 0 transparent;
+}
+.wowprogression .bar-flex .bar-text { color: #fff; }
+.wowprogression .bar-flex .bar-color {
+	background-color: #0c0;
+	background: -webkit-gradient(linear, left top, left bottom, from(#0c0), to(#060));
+	background: -moz-linear-gradient(center top, #0c0, #060) repeat scroll 0 0 transparent;
 }
 .wowprogression .bar-normal .bar-text { color: #fff; }
 .wowprogression .bar-normal .bar-color {
@@ -90,3 +96,7 @@
 .tips .boss-killed { color: red; text-decoration: line-through; }
 
 .tips .details td.mono { padding-left: 5px; font-size: .9em; font-family: "Courier New", Courier, monospace; }
+.tips .details .group0 { color: white; } /* first group of bosses (4 by default) */
+.tips .details .group1 { color: gray; }  /* second group of bosses */
+.tips .details .group2 { color: white; } /* third group of bosses  */
+.tips .details .group3 { color: gray; }  /* fourth group of bosses */

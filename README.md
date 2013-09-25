@@ -54,6 +54,15 @@
 
 # **Change Log**
 
+### Version 1.5.0
+
+* Rewritten to include flex raids.
+* Modified the details section:
+  * Compressed the data (removed spaces), so now you see something like this "++++-------".
+  * Removed the "tens" digit from the boss order number, so only the "ones" digit is showing (i.e. "01234567890123456").
+  * Added `grouping` option which allows for coloring the groups of bosses, default is `5`.
+  * Added grouping class names to the css - `group0` would be the first group of 5 bosses, `group1` would be added to the second group, etc - for better visualization.
+
 ### Version 1.4.0
 
 * Added Siege of Orgrimmar instance.
